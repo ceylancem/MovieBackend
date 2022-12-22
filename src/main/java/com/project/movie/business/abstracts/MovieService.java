@@ -2,13 +2,13 @@ package com.project.movie.business.abstracts;
 
 import java.util.List;
 
-import com.project.movie.dto.requests.CreateMovieRequest;
-import com.project.movie.dto.responses.GetMovieResponse;
+import com.project.movie.dto.requests.MovieRequestDTO;
+import com.project.movie.dto.responses.MovieResponseDTO;
 import com.project.movie.entities.concretes.Movie;
 
 public interface MovieService {
 
-	void add(CreateMovieRequest createMovieRequest) throws Exception;
+	void add(MovieRequestDTO createMovieRequest) throws Exception;
 
 	void delete(long id);
 
@@ -16,8 +16,8 @@ public interface MovieService {
 
 //	List<Movie> getAll();
 
-	List<GetMovieResponse> getAll();
+	List<MovieResponseDTO> getAll();
 
-	GetMovieResponse getById(long id) throws Exception;
+	MovieResponseDTO getById(long id) throws Exception;
 
 }

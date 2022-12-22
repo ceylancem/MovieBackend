@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetMovieResponse {
+public class MovieResponseDTO {
 
 	private long id;
 	private String name;
@@ -20,6 +20,6 @@ public class GetMovieResponse {
 	private int duration;
 	private int releaseYear;
 	private List<Category> categories;
-	private List<GetActorResponse> actors;
+	private List<ActorResponseDTO> actors;
 
 }

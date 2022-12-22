@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.project.movie.business.abstracts.ActorService;
 import com.project.movie.dataAccess.abstracts.ActorRepository;
-import com.project.movie.dto.requests.CreateActorRequest;
-import com.project.movie.dto.responses.GetActorResponse;
+import com.project.movie.dto.requests.ActorRequestDTO;
+import com.project.movie.dto.responses.ActorResponseDTO;
 import com.project.movie.entities.concretes.Actor;
 import com.project.movie.entities.concretes.Movie;
 
@@ -25,7 +25,7 @@ public class ActorManager implements ActorService {
 	}
 
 	@Override
-	public void add(CreateActorRequest createActorRequest) throws Exception {
+	public void add(ActorRequestDTO createActorRequest) throws Exception {
 		Actor actor = modelMapper.map(createActorRequest, Actor.class);
 		actorRepository.save(actor);
 	}
@@ -43,23 +43,23 @@ public class ActorManager implements ActorService {
 	}
 
 	@Override
-	public List<GetActorResponse> getAll() {
-		List<GetActorResponse> getActorResponses = actorRepository.findAll().stream()
-				.map(s -> modelMapper.map(s, GetActorResponse.class)).collect(Collectors.toList());
+	public List<ActorResponseDTO> getAll() {
+		List<ActorResponseDTO> getActorResponses = actorRepository.findAll().stream()
+				.map(s -> modelMapper.map(s, ActorResponseDTO.class)).collect(Collectors.toList());
 		return getActorResponses;
 	}
 
 	@Override
-	public GetActorResponse getById(long id) throws Exception {
+	public ActorResponseDTO getById(long id) throws Exception {
 		Actor actor = actorRepository.findById(id).orElseThrow(() -> new Exception("Actor id does not exists!"));
-		GetActorResponse getActorResponse = modelMapper.map(actor, GetActorResponse.class);
+		ActorResponseDTO getActorResponse = modelMapper.map(actor, ActorResponseDTO.class);
 		return getActorResponse;
 	}
 
 	@Override
-	public List<GetActorResponse> getActorByMovieId(long id) {
-		List<GetActorResponse> getActorMovieResponses = actorRepository.findByMovieId(id).stream()
-				.map(s -> modelMapper.map(s, GetActorResponse.class)).collect(Collectors.toList());
+	public List<ActorResponseDTO> getActorByMovieId(long id) {
+		List<ActorResponseDTO> getActorMovieResponses = actorRepository.findByMovieId(id).stream()
+				.map(s -> modelMapper.map(s, ActorResponseDTO.class)).collect(Collectors.toList());
 		return getActorMovieResponses;
 	}
 

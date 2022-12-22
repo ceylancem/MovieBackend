@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.movie.business.abstracts.MovieService;
-import com.project.movie.dto.requests.CreateMovieRequest;
-import com.project.movie.dto.responses.GetMovieResponse;
+import com.project.movie.dto.requests.MovieRequestDTO;
+import com.project.movie.dto.responses.MovieResponseDTO;
 
 @RestController
 @RequestMapping("/api/movies")
@@ -24,7 +24,7 @@ public class MovieController {
 	}
 
 	@PostMapping("/add")
-	public void add(@RequestBody CreateMovieRequest createMovieRequest) throws Exception {
+	public void add(@RequestBody MovieRequestDTO createMovieRequest) throws Exception {
 		movieService.add(createMovieRequest);
 	}
 
@@ -34,12 +34,12 @@ public class MovieController {
 //	}
 
 	@GetMapping("/getall")
-	public List<GetMovieResponse> getAll() {
+	public List<MovieResponseDTO> getAll() {
 		return movieService.getAll();
 	}
 
 	@GetMapping("/getbyid")
-	public GetMovieResponse getById(@RequestParam long id) throws Exception {
+	public MovieResponseDTO getById(@RequestParam long id) throws Exception {
 		return movieService.getById(id);
 	}
 

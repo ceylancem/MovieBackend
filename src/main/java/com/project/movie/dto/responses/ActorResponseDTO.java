@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetActorResponse {
+public class ActorResponseDTO {
 
 	private long id;
 	private String firstName;

@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.project.movie.business.abstracts.MovieService;
 import com.project.movie.dataAccess.abstracts.MovieRepository;
-import com.project.movie.dto.requests.CreateMovieRequest;
-import com.project.movie.dto.responses.GetMovieResponse;
+import com.project.movie.dto.requests.MovieRequestDTO;
+import com.project.movie.dto.responses.MovieResponseDTO;
 import com.project.movie.entities.concretes.Movie;
 
 @Service
@@ -24,7 +24,7 @@ public class MovieManager implements MovieService {
 	}
 
 	@Override
-	public void add(CreateMovieRequest createMovieRequest) throws Exception {
+	public void add(MovieRequestDTO createMovieRequest) throws Exception {
 		if (createMovieRequest.getName().isEmpty() || createMovieRequest.getName().isBlank())
 			throw new Exception("Movie name can not be empty!");
 		Movie movie = modelMapper.map(createMovieRequest, Movie.class);
@@ -43,16 +43,16 @@ public class MovieManager implements MovieService {
 	}
 
 	@Override
-	public List<GetMovieResponse> getAll() {
-		List<GetMovieResponse> getMovieResponse = movieRepository.findAll().stream()
-				.map(s -> modelMapper.map(s, GetMovieResponse.class)).collect(Collectors.toList());
+	public List<MovieResponseDTO> getAll() {
+		List<MovieResponseDTO> getMovieResponse = movieRepository.findAll().stream()
+				.map(s -> modelMapper.map(s, MovieResponseDTO.class)).collect(Collectors.toList());
 		return getMovieResponse;
 	}
 
 	@Override
-	public GetMovieResponse getById(long id) throws Exception {
+	public MovieResponseDTO getById(long id) throws Exception {
 		Movie movie = movieRepository.findById(id).orElseThrow(() -> new Exception("Movie id does not exists!"));
-		GetMovieResponse getMovieResponse = modelMapper.map(movie, GetMovieResponse.class);
+		MovieResponseDTO getMovieResponse = modelMapper.map(movie, MovieResponseDTO.class);
 		return getMovieResponse;
 	}
 

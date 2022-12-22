@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.movie.business.abstracts.ActorService;
-import com.project.movie.dto.requests.CreateActorRequest;
-import com.project.movie.dto.responses.GetActorResponse;
+import com.project.movie.dto.requests.ActorRequestDTO;
+import com.project.movie.dto.responses.ActorResponseDTO;
 
 @RestController
 @RequestMapping("/api/actors")
@@ -24,17 +24,17 @@ public class ActorController {
 	}
 
 	@PostMapping("/add")
-	public void add(@RequestBody CreateActorRequest createActorRequest) throws Exception {
+	public void add(@RequestBody ActorRequestDTO createActorRequest) throws Exception {
 		actorService.add(createActorRequest);
 	}
 
 	@GetMapping("/getall")
-	public List<GetActorResponse> getAll() {
+	public List<ActorResponseDTO> getAll() {
 		return actorService.getAll();
 	}
 
 	@GetMapping("/getactorbymovieid")
-	public List<GetActorResponse> getByMovieId(@RequestParam long id) {
+	public List<ActorResponseDTO> getByMovieId(@RequestParam long id) {
 		return actorService.getActorByMovieId(id);
 	}
 
