@@ -3,16 +3,16 @@ package com.project.movie.business.abstracts;
 import java.util.List;
 
 import com.project.movie.dto.requests.ActorRequestDTO;
+import com.project.movie.dto.requests.UpdateActorRequestDTO;
 import com.project.movie.dto.responses.ActorResponseDTO;
-import com.project.movie.entities.concretes.Movie;
 
 public interface ActorService {
 
 	void add(ActorRequestDTO createActorRequest) throws Exception;
 
-	void delete(int id);
+	void delete(long id);
 
-	void update(Movie movie);
+	void update(UpdateActorRequestDTO updateActorRequestDTO) throws Exception;
 
 	List<ActorResponseDTO> getAll();
 

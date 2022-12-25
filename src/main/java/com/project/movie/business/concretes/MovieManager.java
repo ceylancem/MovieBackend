@@ -38,12 +38,6 @@ public class MovieManager implements MovieService {
 	}
 
 	@Override
-	public void update(Movie movie) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public List<MovieResponseDTO> getAll() {
 		List<MovieResponseDTO> getMovieResponse = movieRepository.findAll().stream()
 				.map(s -> modelMapper.map(s, MovieResponseDTO.class)).collect(Collectors.toList());

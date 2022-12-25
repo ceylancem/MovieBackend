@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import com.project.movie.business.abstracts.ActorService;
 import com.project.movie.dataAccess.abstracts.ActorRepository;
 import com.project.movie.dto.requests.ActorRequestDTO;
+import com.project.movie.dto.requests.UpdateActorRequestDTO;
 import com.project.movie.dto.responses.ActorResponseDTO;
 import com.project.movie.entities.concretes.Actor;
-import com.project.movie.entities.concretes.Movie;
 
 @Service
 public class ActorManager implements ActorService {
@@ -31,15 +31,21 @@ public class ActorManager implements ActorService {
 	}
 
 	@Override
-	public void delete(int id) {
-		// TODO Auto-generated method stub
-
+	public void delete(long id) {
+		actorRepository.deleteById(id);
 	}
 
 	@Override
-	public void update(Movie movie) {
-		// TODO Auto-generated method stub
-
+	public void update(UpdateActorRequestDTO updateActorRequestDTO) throws Exception {
+		if (updateActorRequestDTO.getFirstName().isEmpty() || updateActorRequestDTO.getFirstName().isBlank()
+				|| updateActorRequestDTO.getLastName().isEmpty() || updateActorRequestDTO.getLastName().isBlank()) {
+			throw new Exception("Name or last name can not be null");
+		} else {
+			Actor actor = actorRepository.findById(updateActorRequestDTO.getId())
+					.orElseThrow(() -> new Exception("Id does not exists"));
+			actor = modelMapper.map(updateActorRequestDTO, Actor.class);
+			actorRepository.save(actor);
+		}
 	}
 
 	@Override

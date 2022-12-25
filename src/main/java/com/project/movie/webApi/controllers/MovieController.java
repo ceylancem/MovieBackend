@@ -2,6 +2,7 @@ package com.project.movie.webApi.controllers;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -43,6 +44,11 @@ public class MovieController {
 	@PutMapping("/update")
 	public void update(@RequestBody UpdateMovieRequestDTO updateMovieRequestDTO) throws Exception {
 		movieService.update(updateMovieRequestDTO);
+	}
+
+	@DeleteMapping("/delete/{id}")
+	public void delete(@RequestParam long id) {
+		movieService.delete(id);
 	}
 
 }
