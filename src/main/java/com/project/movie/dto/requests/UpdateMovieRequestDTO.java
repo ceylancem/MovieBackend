@@ -1,7 +1,8 @@
-package com.project.movie.dto.responses;
+package com.project.movie.dto.requests;
 
 import java.util.List;
 
+import com.project.movie.dto.responses.MovieActorResponseDTO;
 import com.project.movie.entities.concretes.Category;
 
 import lombok.AllArgsConstructor;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MovieResponseDTO {
+public class UpdateMovieRequestDTO {
 
 	private long id;
 	private String name;
@@ -20,6 +21,6 @@ public class MovieResponseDTO {
 	private int duration;
 	private int releaseYear;
 	private List<Category> categories;
-	private List<ActorResponseInMovieDTO> actors;
+	private List<MovieActorResponseDTO> actors;
 
 }

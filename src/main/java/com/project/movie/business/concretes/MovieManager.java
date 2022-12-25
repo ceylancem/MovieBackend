@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.project.movie.business.abstracts.MovieService;
 import com.project.movie.dataAccess.abstracts.MovieRepository;
 import com.project.movie.dto.requests.MovieRequestDTO;
+import com.project.movie.dto.requests.UpdateMovieRequestDTO;
 import com.project.movie.dto.responses.MovieResponseDTO;
 import com.project.movie.entities.concretes.Movie;
 
@@ -54,6 +55,18 @@ public class MovieManager implements MovieService {
 		Movie movie = movieRepository.findById(id).orElseThrow(() -> new Exception("Movie id does not exists!"));
 		MovieResponseDTO getMovieResponse = modelMapper.map(movie, MovieResponseDTO.class);
 		return getMovieResponse;
+	}
+
+	@Override
+	public void update(UpdateMovieRequestDTO updateMovieRequestDTO) throws Exception {
+		if (updateMovieRequestDTO.getName().isEmpty() || updateMovieRequestDTO.getName().isBlank()) {
+			throw new Exception("Name can not be null");
+		} else {
+			Movie movie = movieRepository.findById(updateMovieRequestDTO.getId())
+					.orElseThrow(() -> new Exception("Id does not exists"));
+			movie = modelMapper.map(updateMovieRequestDTO, Movie.class);
+			movieRepository.save(movie);
+		}
 	}
 
 }

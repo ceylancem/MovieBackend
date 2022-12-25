@@ -10,6 +10,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -41,7 +43,10 @@ public class Actor {
 	private LocalDate dateOfBirth;
 
 	@JsonIgnore
-	@ManyToMany(mappedBy = "actors")
+	@JoinTable(name = "movies_actors", joinColumns = {
+			@JoinColumn(name = "actor_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "movie_id", referencedColumnName = "id") })
+	@ManyToMany
 	private List<Movie> movies;
 
 	@Enumerated(EnumType.STRING)

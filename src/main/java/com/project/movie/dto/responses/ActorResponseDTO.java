@@ -1,6 +1,7 @@
 package com.project.movie.dto.responses;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import com.project.movie.entities.concretes.Gender;
 
@@ -18,5 +19,6 @@ public class ActorResponseDTO {
 	private String lastName;
 	private LocalDate dateOfBirth;
 	private Gender gender;
+	private List<MovieResponseInActorDTO> movies;
 
 }
