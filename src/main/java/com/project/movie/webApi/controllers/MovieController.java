@@ -30,11 +30,6 @@ public class MovieController {
 		movieService.add(createMovieRequest);
 	}
 
-//	@GetMapping("/getall")
-//	public List<Movie> getAll() {
-//		return movieService.getAll();
-//	}
-
 	@GetMapping("/getall")
 	public List<MovieResponseDTO> getAll() {
 		return movieService.getAll();
@@ -44,7 +39,7 @@ public class MovieController {
 	public MovieResponseDTO getById(@RequestParam long id) throws Exception {
 		return movieService.getById(id);
 	}
-	
+
 	@PutMapping("/update")
 	public void update(@RequestBody UpdateMovieRequestDTO updateMovieRequestDTO) throws Exception {
 		movieService.update(updateMovieRequestDTO);
