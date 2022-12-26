@@ -52,4 +52,14 @@ public class ActorController {
 		actorService.update(updateActorRequestDTO);
 	}
 
+	@PutMapping("/addmovie")
+	public void addMovie(@RequestParam long id, @RequestParam List<Long> movieId) throws Exception {
+		actorService.addMovie(id, movieId);
+	}
+
+	@PutMapping("/deletemovie")
+	public void deleteMovie(@RequestParam long id, @RequestParam List<Long> movieIds) throws Exception {
+		actorService.deleteMovie(id, movieIds);
+	}
+
 }

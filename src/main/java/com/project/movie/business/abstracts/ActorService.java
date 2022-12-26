@@ -20,4 +20,10 @@ public interface ActorService {
 
 	List<ActorResponseDTO> getActorByMovieId(long id);
 
+	void addMovie(long actorId, List<Long> movieIds) throws Exception;
+
+	void deleteMovie(long actorId, List<Long> movieIds) throws Exception;
+
+	boolean checkMovieInActor(long actorId, long movieId) throws Exception;
+
 }
