@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.movie.business.abstracts.ActorService;
-import com.project.movie.dto.requests.ActorRequestDTO;
-import com.project.movie.dto.requests.UpdateActorRequestDTO;
-import com.project.movie.dto.responses.ActorResponseDTO;
+import com.project.movie.dto.requests.ActorRequestDto;
+import com.project.movie.dto.requests.UpdateActorRequestDto;
+import com.project.movie.dto.responses.ActorResponseDto;
 
 @RestController
 @RequestMapping("/api/actors")
@@ -28,17 +28,17 @@ public class ActorController {
 	}
 
 	@PostMapping("/add")
-	public void add(@RequestBody ActorRequestDTO createActorRequest) throws Exception {
+	public void add(@RequestBody ActorRequestDto createActorRequest) throws Exception {
 		actorService.add(createActorRequest);
 	}
 
 	@GetMapping("/getall")
-	public List<ActorResponseDTO> getAll() {
+	public List<ActorResponseDto> getAll() {
 		return actorService.getAll();
 	}
 
 	@GetMapping("/getactorbymovieid")
-	public List<ActorResponseDTO> getByMovieId(@RequestParam long id) {
+	public List<ActorResponseDto> getByMovieId(@RequestParam long id) {
 		return actorService.getActorByMovieId(id);
 	}
 
@@ -48,8 +48,8 @@ public class ActorController {
 	}
 
 	@PutMapping("/update")
-	public void update(@RequestBody UpdateActorRequestDTO updateActorRequestDTO) throws Exception {
-		actorService.update(updateActorRequestDTO);
+	public void update(@RequestBody UpdateActorRequestDto updateActorRequestDto) throws Exception {
+		actorService.update(updateActorRequestDto);
 	}
 
 	@PutMapping("/addmovie")

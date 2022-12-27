@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 import com.project.movie.business.abstracts.ActorService;
 import com.project.movie.business.abstracts.MovieService;
 import com.project.movie.dataAccess.abstracts.ActorRepository;
-import com.project.movie.dto.requests.ActorRequestDTO;
-import com.project.movie.dto.requests.UpdateActorRequestDTO;
-import com.project.movie.dto.responses.ActorResponseDTO;
-import com.project.movie.dto.responses.MovieResponseDTO;
-import com.project.movie.dto.responses.MovieResponseInActorDTO;
+import com.project.movie.dto.requests.ActorRequestDto;
+import com.project.movie.dto.requests.UpdateActorRequestDto;
+import com.project.movie.dto.responses.ActorResponseDto;
+import com.project.movie.dto.responses.MovieResponseDto;
+import com.project.movie.dto.responses.MovieResponseInActorDto;
 import com.project.movie.entities.concretes.Actor;
 import com.project.movie.entities.concretes.Movie;
 
@@ -31,7 +31,7 @@ public class ActorManager implements ActorService {
 	}
 
 	@Override
-	public void add(ActorRequestDTO createActorRequest) throws Exception {
+	public void add(ActorRequestDto createActorRequest) throws Exception {
 		Actor actor = modelMapper.map(createActorRequest, Actor.class);
 		actorRepository.save(actor);
 	}
@@ -42,36 +42,36 @@ public class ActorManager implements ActorService {
 	}
 
 	@Override
-	public void update(UpdateActorRequestDTO updateActorRequestDTO) throws Exception {
-		if (updateActorRequestDTO.getFirstName().isEmpty() || updateActorRequestDTO.getFirstName().isBlank()
-				|| updateActorRequestDTO.getLastName().isEmpty() || updateActorRequestDTO.getLastName().isBlank()) {
+	public void update(UpdateActorRequestDto updateActorRequestDto) throws Exception {
+		if (updateActorRequestDto.getFirstName().isEmpty() || updateActorRequestDto.getFirstName().isBlank()
+				|| updateActorRequestDto.getLastName().isEmpty() || updateActorRequestDto.getLastName().isBlank()) {
 			throw new Exception("Name or last name can not be null");
 		} else {
-			Actor actor = actorRepository.findById(updateActorRequestDTO.getId())
+			Actor actor = actorRepository.findById(updateActorRequestDto.getId())
 					.orElseThrow(() -> new Exception("Id does not exists"));
-			actor = modelMapper.map(updateActorRequestDTO, Actor.class);
+			actor = modelMapper.map(updateActorRequestDto, Actor.class);
 			actorRepository.save(actor);
 		}
 	}
 
 	@Override
-	public List<ActorResponseDTO> getAll() {
-		List<ActorResponseDTO> getActorResponses = actorRepository.findAll().stream()
-				.map(s -> modelMapper.map(s, ActorResponseDTO.class)).collect(Collectors.toList());
+	public List<ActorResponseDto> getAll() {
+		List<ActorResponseDto> getActorResponses = actorRepository.findAll().stream()
+				.map(s -> modelMapper.map(s, ActorResponseDto.class)).collect(Collectors.toList());
 		return getActorResponses;
 	}
 
 	@Override
-	public ActorResponseDTO getById(long id) throws Exception {
+	public ActorResponseDto getById(long id) throws Exception {
 		Actor actor = actorRepository.findById(id).orElseThrow(() -> new Exception("Actor id does not exists!"));
-		ActorResponseDTO getActorResponse = modelMapper.map(actor, ActorResponseDTO.class);
+		ActorResponseDto getActorResponse = modelMapper.map(actor, ActorResponseDto.class);
 		return getActorResponse;
 	}
 
 	@Override
-	public List<ActorResponseDTO> getActorByMovieId(long id) {
-		List<ActorResponseDTO> getActorMovieResponses = actorRepository.findByMovieId(id).stream()
-				.map(s -> modelMapper.map(s, ActorResponseDTO.class)).collect(Collectors.toList());
+	public List<ActorResponseDto> getActorByMovieId(long id) {
+		List<ActorResponseDto> getActorMovieResponses = actorRepository.findByMovieId(id).stream()
+				.map(s -> modelMapper.map(s, ActorResponseDto.class)).collect(Collectors.toList());
 		return getActorMovieResponses;
 	}
 
@@ -79,7 +79,7 @@ public class ActorManager implements ActorService {
 	public void addMovie(long actorId, List<Long> movieIds) throws Exception {
 		Actor actor = actorRepository.findById(actorId).orElseThrow(() -> new Exception("Actor does not exists!"));
 		for (Long movieId : movieIds) {
-			MovieResponseDTO movieResponseDTO = movieService.getById(movieId);
+			MovieResponseDto movieResponseDTO = movieService.getById(movieId);
 			Movie movie = modelMapper.map(movieResponseDTO, Movie.class);
 			if (!checkMovieInActor(actorId, movieId))
 				actor.getMovies().add(movie);
@@ -89,16 +89,16 @@ public class ActorManager implements ActorService {
 
 	@Override
 	public void deleteMovie(long actorId, List<Long> movieIds) throws Exception {
-		ActorResponseDTO actorResponseDTO = getById(actorId);
+		ActorResponseDto actorResponseDto = getById(actorId);
 		for (Long movieId : movieIds) {
-			MovieResponseDTO movieResponseDTO = movieService.getById(movieId);
+			MovieResponseDto movieResponseDto = movieService.getById(movieId);
 			if (checkMovieInActor(actorId, movieId)) {
-				MovieResponseInActorDTO movieResponseInActorDTO = modelMapper.map(movieResponseDTO,
-						MovieResponseInActorDTO.class);
-				actorResponseDTO.getMovies().remove(movieResponseInActorDTO);
+				MovieResponseInActorDto movieResponseInActorDto = modelMapper.map(movieResponseDto,
+						MovieResponseInActorDto.class);
+				actorResponseDto.getMovies().remove(movieResponseInActorDto);
 			}
 		}
-		Actor actor = modelMapper.map(actorResponseDTO, Actor.class);
+		Actor actor = modelMapper.map(actorResponseDto, Actor.class);
 		actorRepository.save(actor);
 	}
 

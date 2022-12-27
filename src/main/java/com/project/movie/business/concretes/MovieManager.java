@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.project.movie.business.abstracts.MovieService;
 import com.project.movie.dataAccess.abstracts.MovieRepository;
-import com.project.movie.dto.requests.MovieRequestDTO;
-import com.project.movie.dto.requests.UpdateMovieRequestDTO;
-import com.project.movie.dto.responses.MovieResponseDTO;
+import com.project.movie.dto.requests.MovieRequestDto;
+import com.project.movie.dto.requests.UpdateMovieRequestDto;
+import com.project.movie.dto.responses.MovieResponseDto;
 import com.project.movie.entities.concretes.Movie;
 
 @Service
@@ -25,7 +25,7 @@ public class MovieManager implements MovieService {
 	}
 
 	@Override
-	public void add(MovieRequestDTO createMovieRequest) throws Exception {
+	public void add(MovieRequestDto createMovieRequest) throws Exception {
 		if (createMovieRequest.getName().isEmpty() || createMovieRequest.getName().isBlank())
 			throw new Exception("Movie name can not be empty!");
 		Movie movie = modelMapper.map(createMovieRequest, Movie.class);
@@ -38,27 +38,27 @@ public class MovieManager implements MovieService {
 	}
 
 	@Override
-	public List<MovieResponseDTO> getAll() {
-		List<MovieResponseDTO> getMovieResponse = movieRepository.findAll().stream()
-				.map(s -> modelMapper.map(s, MovieResponseDTO.class)).collect(Collectors.toList());
+	public List<MovieResponseDto> getAll() {
+		List<MovieResponseDto> getMovieResponse = movieRepository.findAll().stream()
+				.map(s -> modelMapper.map(s, MovieResponseDto.class)).collect(Collectors.toList());
 		return getMovieResponse;
 	}
 
 	@Override
-	public MovieResponseDTO getById(long id) throws Exception {
+	public MovieResponseDto getById(long id) throws Exception {
 		Movie movie = movieRepository.findById(id).orElseThrow(() -> new Exception("Movie id does not exists!"));
-		MovieResponseDTO getMovieResponse = modelMapper.map(movie, MovieResponseDTO.class);
+		MovieResponseDto getMovieResponse = modelMapper.map(movie, MovieResponseDto.class);
 		return getMovieResponse;
 	}
 
 	@Override
-	public void update(UpdateMovieRequestDTO updateMovieRequestDTO) throws Exception {
-		if (updateMovieRequestDTO.getName().isEmpty() || updateMovieRequestDTO.getName().isBlank()) {
+	public void update(UpdateMovieRequestDto updateMovieRequestDto) throws Exception {
+		if (updateMovieRequestDto.getName().isEmpty() || updateMovieRequestDto.getName().isBlank()) {
 			throw new Exception("Name can not be null");
 		} else {
-			Movie movie = movieRepository.findById(updateMovieRequestDTO.getId())
+			Movie movie = movieRepository.findById(updateMovieRequestDto.getId())
 					.orElseThrow(() -> new Exception("Id does not exists"));
-			movie = modelMapper.map(updateMovieRequestDTO, Movie.class);
+			movie = modelMapper.map(updateMovieRequestDto, Movie.class);
 			movieRepository.save(movie);
 		}
 	}

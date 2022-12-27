@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MovieResponseInActorDTO {
+public class MovieResponseInActorDto {
 
 	private long id;
 	private String name;

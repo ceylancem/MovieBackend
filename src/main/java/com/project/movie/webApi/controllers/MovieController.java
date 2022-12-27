@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.movie.business.abstracts.MovieService;
-import com.project.movie.dto.requests.MovieRequestDTO;
-import com.project.movie.dto.requests.UpdateMovieRequestDTO;
-import com.project.movie.dto.responses.MovieResponseDTO;
+import com.project.movie.dto.requests.MovieRequestDto;
+import com.project.movie.dto.requests.UpdateMovieRequestDto;
+import com.project.movie.dto.responses.MovieResponseDto;
 
 @RestController
 @RequestMapping("/api/movies")
@@ -27,23 +27,23 @@ public class MovieController {
 	}
 
 	@PostMapping("/add")
-	public void add(@RequestBody MovieRequestDTO createMovieRequest) throws Exception {
+	public void add(@RequestBody MovieRequestDto createMovieRequest) throws Exception {
 		movieService.add(createMovieRequest);
 	}
 
 	@GetMapping("/getall")
-	public List<MovieResponseDTO> getAll() {
+	public List<MovieResponseDto> getAll() {
 		return movieService.getAll();
 	}
 
 	@GetMapping("/getbyid")
-	public MovieResponseDTO getById(@RequestParam long id) throws Exception {
+	public MovieResponseDto getById(@RequestParam long id) throws Exception {
 		return movieService.getById(id);
 	}
 
 	@PutMapping("/update")
-	public void update(@RequestBody UpdateMovieRequestDTO updateMovieRequestDTO) throws Exception {
-		movieService.update(updateMovieRequestDTO);
+	public void update(@RequestBody UpdateMovieRequestDto updateMovieRequestDto) throws Exception {
+		movieService.update(updateMovieRequestDto);
 	}
 
 	@DeleteMapping("/delete/{id}")

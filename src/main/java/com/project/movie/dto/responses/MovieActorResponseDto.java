@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MovieActorResponseDTO {
+public class MovieActorResponseDto {
 
 	private long id;
 
