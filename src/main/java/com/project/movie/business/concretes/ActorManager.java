@@ -7,11 +7,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.project.movie.business.abstracts.ActorService;
+import com.project.movie.business.abstracts.MovieService;
 import com.project.movie.dataAccess.abstracts.ActorRepository;
-import com.project.movie.dataAccess.abstracts.MovieRepository;
 import com.project.movie.dto.requests.ActorRequestDTO;
 import com.project.movie.dto.requests.UpdateActorRequestDTO;
 import com.project.movie.dto.responses.ActorResponseDTO;
+import com.project.movie.dto.responses.MovieResponseDTO;
+import com.project.movie.dto.responses.MovieResponseInActorDTO;
 import com.project.movie.entities.concretes.Actor;
 import com.project.movie.entities.concretes.Movie;
 
@@ -20,12 +22,12 @@ public class ActorManager implements ActorService {
 
 	private ActorRepository actorRepository;
 	private ModelMapper modelMapper;
-	private MovieRepository movieRepository;
+	private MovieService movieService;
 
-	public ActorManager(ActorRepository actorRepository, ModelMapper modelMapper, MovieRepository movieRepository) {
+	public ActorManager(ActorRepository actorRepository, ModelMapper modelMapper, MovieService movieService) {
 		this.actorRepository = actorRepository;
 		this.modelMapper = modelMapper;
-		this.movieRepository = movieRepository;
+		this.movieService = movieService;
 	}
 
 	@Override
@@ -77,7 +79,8 @@ public class ActorManager implements ActorService {
 	public void addMovie(long actorId, List<Long> movieIds) throws Exception {
 		Actor actor = actorRepository.findById(actorId).orElseThrow(() -> new Exception("Actor does not exists!"));
 		for (Long movieId : movieIds) {
-			Movie movie = movieRepository.findById(movieId).orElse(null);
+			MovieResponseDTO movieResponseDTO = movieService.getById(movieId);
+			Movie movie = modelMapper.map(movieResponseDTO, Movie.class);
 			if (!checkMovieInActor(actorId, movieId))
 				actor.getMovies().add(movie);
 		}
@@ -86,12 +89,16 @@ public class ActorManager implements ActorService {
 
 	@Override
 	public void deleteMovie(long actorId, List<Long> movieIds) throws Exception {
-		Actor actor = actorRepository.findById(actorId).orElseThrow(() -> new Exception("Actor does not exists!"));
+		ActorResponseDTO actorResponseDTO = getById(actorId);
 		for (Long movieId : movieIds) {
-			Movie movie = movieRepository.findById(movieId).orElse(null);
-			if (checkMovieInActor(actorId, movieId))
-				actor.getMovies().remove(movie);
+			MovieResponseDTO movieResponseDTO = movieService.getById(movieId);
+			if (checkMovieInActor(actorId, movieId)) {
+				MovieResponseInActorDTO movieResponseInActorDTO = modelMapper.map(movieResponseDTO,
+						MovieResponseInActorDTO.class);
+				actorResponseDTO.getMovies().remove(movieResponseInActorDTO);
+			}
 		}
+		Actor actor = modelMapper.map(actorResponseDTO, Actor.class);
 		actorRepository.save(actor);
 	}
 
