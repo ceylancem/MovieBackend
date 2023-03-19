@@ -25,5 +25,7 @@ public interface ActorService {
 	void deleteMovie(long actorId, List<Long> movieIds) throws Exception;
 
 	boolean checkMovieInActor(long actorId, long movieId) throws Exception;
+	
+	//TEST
 
 }
